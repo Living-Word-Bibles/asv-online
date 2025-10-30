@@ -259,7 +259,7 @@ function templatePage({ book, chapter, verse, text }) {
     <div id="copyState" class="copied" hidden>Copied!</div>
 
     <footer>
-      Copyright © 2025 | Living Word Bibles | <a href="https://www.livingwordbibles.com" rel="noopener">www.livingwordbibles.com</a>
+      Copyright © 2025 | Living Word Bibles | All Rights Reserved | <a href="https://www.livingwordbibles.com" rel="noopener">www.livingwordbibles.com</a>
     </footer>
   </div>
 
