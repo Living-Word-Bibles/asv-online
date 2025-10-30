@@ -18,15 +18,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: node build.mjs
+
+      # Not strictly needed, but avoids 'npm not found' warnings in some org policies
+      - name: Prepare workspace
+        run: npm i --no-audit --no-fund || true
+
+      - name: Build static site
+        run: node build.mjs
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
       - name: Add CNAME
         run: echo "asv.the-holy-bible.livingwordbibles.com" > dist/CNAME
-      - uses: actions/upload-pages-artifact@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
