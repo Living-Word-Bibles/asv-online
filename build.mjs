@@ -49,44 +49,32 @@ function normalizeBook(v) {
   const s = String(v).trim();
   const map = {
     "gen":"Genesis","ge":"Genesis","gn":"Genesis",
-    "ex":"Exodus","exod":"Exodus",
-    "lev":"Leviticus","leviticus":"Leviticus",
-    "num":"Numbers","nu":"Numbers","nm":"Numbers",
-    "deut":"Deuteronomy","dt":"Deuteronomy",
-    "jos":"Joshua","josh":"Joshua",
-    "jdg":"Judges","judg":"Judges",
-    "ru":"Ruth","rut":"Ruth",
-    "1sa":"1 Samuel","1 sam":"1 Samuel","1sam":"1 Samuel",
-    "2sa":"2 Samuel","2 sam":"2 Samuel","2sam":"2 Samuel",
-    "1ki":"1 Kings","1kgs":"1 Kings","1 kgs":"1 Kings",
-    "2ki":"2 Kings","2kgs":"2 Kings","2 kgs":"2 Kings",
-    "1ch":"1 Chronicles","1 chr":"1 Chronicles","1chr":"1 Chronicles",
-    "2ch":"2 Chronicles","2 chr":"2 Chronicles","2chr":"2 Chronicles",
-    "ezr":"Ezra","neh":"Nehemiah","est":"Esther",
-    "job":"Job","ps":"Psalms","psa":"Psalms","psalm":"Psalms","psalms":"Psalms",
+    "ex":"Exodus","exod":"Exodus","lev":"Leviticus","leviticus":"Leviticus",
+    "num":"Numbers","nu":"Numbers","nm":"Numbers","deut":"Deuteronomy","dt":"Deuteronomy",
+    "jos":"Joshua","josh":"Joshua","jdg":"Judges","judg":"Judges","ru":"Ruth","rut":"Ruth",
+    "1sa":"1 Samuel","1 sam":"1 Samuel","1sam":"1 Samuel","2sa":"2 Samuel","2 sam":"2 Samuel","2sam":"2 Samuel",
+    "1ki":"1 Kings","1 kgs":"1 Kings","1kgs":"1 Kings","2ki":"2 Kings","2 kgs":"2 Kings","2kgs":"2 Kings",
+    "1ch":"1 Chronicles","1 chr":"1 Chronicles","1chr":"1 Chronicles","2ch":"2 Chronicles","2 chr":"2 Chronicles","2chr":"2 Chronicles",
+    "ezr":"Ezra","neh":"Nehemiah","est":"Esther","job":"Job",
+    "ps":"Psalms","psa":"Psalms","psalm":"Psalms","psalms":"Psalms",
     "prov":"Proverbs","prv":"Proverbs","pro":"Proverbs",
     "eccl":"Ecclesiastes","ecc":"Ecclesiastes","qohelet":"Ecclesiastes",
     "song":"Song of Solomon","song of songs":"Song of Solomon","canticles":"Song of Solomon","ss":"Song of Solomon",
-    "isa":"Isaiah","jer":"Jeremiah","lam":"Lamentations","eze":"Ezekiel","ezek":"Ezekiel",
-    "dan":"Daniel","hos":"Hosea","joe":"Joel","amo":"Amos","oba":"Obadiah","jon":"Jonah",
-    "mic":"Micah","nah":"Nahum","hab":"Habakkuk","zep":"Zephaniah","hag":"Haggai","zec":"Zechariah","zech":"Zechariah","mal":"Malachi",
-    "mat":"Matthew","matt":"Matthew","mk":"Mark","mrk":"Mark","lk":"Luke","luk":"Luke","jn":"John","jhn":"John",
-    "act":"Acts","rom":"Romans",
+    "isa":"Isaiah","jer":"Jeremiah","lam":"Lamentations","eze":"Ezekiel","ezek":"Ezekiel","dan":"Daniel","hos":"Hosea","joe":"Joel",
+    "amo":"Amos","oba":"Obadiah","jon":"Jonah","mic":"Micah","nah":"Nahum","hab":"Habakkuk","zep":"Zephaniah","hag":"Haggai",
+    "zec":"Zechariah","zech":"Zechariah","mal":"Malachi","mat":"Matthew","matt":"Matthew","mk":"Mark","mrk":"Mark","lk":"Luke","luk":"Luke",
+    "jn":"John","jhn":"John","act":"Acts","rom":"Romans",
     "1co":"1 Corinthians","1 cor":"1 Corinthians","1cor":"1 Corinthians",
     "2co":"2 Corinthians","2 cor":"2 Corinthians","2cor":"2 Corinthians",
-    "gal":"Galatians","eph":"Ephesians","php":"Philippians","phil":"Philippians",
-    "col":"Colossians","1th":"1 Thessalonians","1 thes":"1 Thessalonians","1thess":"1 Thessalonians",
+    "gal":"Galatians","eph":"Ephesians","php":"Philippians","phil":"Philippians","col":"Colossians",
+    "1th":"1 Thessalonians","1 thes":"1 Thessalonians","1thess":"1 Thessalonians",
     "2th":"2 Thessalonians","2 thes":"2 Thessalonians","2thess":"2 Thessalonians",
-    "1ti":"1 Timothy","1 tim":"1 Timothy","1tim":"1 Timothy",
-    "2ti":"2 Timothy","2 tim":"2 Timothy","2tim":"2 Timothy",
-    "tit":"Titus","phm":"Philemon","philem":"Philemon",
-    "heb":"Hebrews","jas":"James","jam":"James","james":"James",
-    "1pe":"1 Peter","1 pet":"1 Peter","1pet":"1 Peter",
-    "2pe":"2 Peter","2 pet":"2 Peter","2pet":"2 Peter",
-    "1jn":"1 John","1 joh":"1 John","1john":"1 John",
-    "2jn":"2 John","2 joh":"2 John","2john":"2 John",
-    "3jn":"3 John","3 joh":"3 John","3john":"3 John",
-    "jud":"Jude","rev":"Revelation","re":"Revelation","apoc":"Revelation"
+    "1ti":"1 Timothy","1 tim":"1 Timothy","1tim":"1 Timothy","2ti":"2 Timothy","2 tim":"2 Timothy","2tim":"2 Timothy",
+    "tit":"Titus","phm":"Philemon","philem":"Philemon","heb":"Hebrews",
+    "jas":"James","jam":"James","james":"James",
+    "1pe":"1 Peter","1 pet":"1 Peter","1pet":"1 Peter","2pe":"2 Peter","2 pet":"2 Peter","2pet":"2 Peter",
+    "1jn":"1 John","1 joh":"1 John","1john":"1 John","2jn":"2 John","2 joh":"2 John","2john":"2 John",
+    "3jn":"3 John","3 joh":"3 John","3john":"3 John","jud":"Jude","rev":"Revelation","re":"Revelation","apoc":"Revelation"
   };
   const k = s.toLowerCase().replace(/\./g, "").replace(/\s+/g, " ").trim();
   return map[k] || s;
@@ -175,7 +163,6 @@ async function fetchJsonAny(urls) {
 
 // ---------- Page template ----------
 function svg(icon){
-  // minimal, inline SVG icons
   const base = {
     fb:  '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.8V12h2.6V9.8c0-2.6 1.6-4 3.9-4 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>',
     ig:  '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zm5.8-3.3a1 1 0 1 1-1.4 1.4 1 1 0 0 1 1.4-1.4z"/></svg>',
@@ -193,7 +180,6 @@ function templatePage({ book, chapter, verse, text }) {
   const title = `${ref} — ${TITLE}`;
   const verseEsc = escapeHTML(text);
 
-  // Build HTML
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -206,43 +192,43 @@ function templatePage({ book, chapter, verse, text }) {
   <meta property="og:site_name" content="${BRAND}"><meta name="twitter:card" content="summary_large_image">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap');
-    :root{ --border:#e6e6e6; --ink:#111; --muted:#737373; --bg:#fff; --chip:#f5f5f5; --brand:#111; }
+    :root{ --border:#e6e6e6; --ink:#111; --muted:#737373; --chip:#f5f5f5; }
     *{ box-sizing:border-box }
-    body{ font-family:'EB Garamond',serif; color:var(--ink); background:var(--bg); margin:0; }
-    .wrap{ max-width:920px; margin:24px auto; padding:16px; }
-    header{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-    .brand{ display:flex; align-items:center; gap:12px; }
-    .brand img{ height:80px; border-radius:12px; }
-    .title{ text-align:center; width:100%; margin-top:8px; }
-    h1{ font-size:28px; margin:8px 0 0 }
+    body{ font-family:'EB Garamond',serif; color:var(--ink); margin:0; }
+    .wrap{ max-width:920px; margin:32px auto; padding:16px; }
+
+    header{ display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center; }
+    header img{ height:96px; border-radius:12px; }
+    h1{ font-size:28px; margin:8px 0 0; }
     .sub{ color:var(--muted); font-size:14px; }
-    .pill{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:999px; text-decoration:none; color:inherit; }
-    .toolbar{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; justify-content:center; }
-    .searchbar{ display:flex; gap:8px; justify-content:center; margin-top:12px; }
-    .searchbar input{ padding:10px 12px; border:1px solid var(--border); border-radius:12px; min-width:260px; font-size:16px; }
-    .searchbar button{ padding:10px 14px; border:1px solid var(--border); border-radius:12px; background:#fafafa; cursor:pointer; }
+
+    .searchbar{ display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
+    .searchbar input{ padding:10px 12px; border:1px solid var(--border); border-radius:12px; min-width:280px; font-size:16px; }
+    .searchbar button, .searchbar a.btnlink{
+      padding:10px 14px; border:1px solid var(--border); border-radius:12px; background:#fafafa; cursor:pointer; text-decoration:none; color:inherit;
+    }
+
     .verse{ font-size:22px; line-height:1.65; margin-top:16px; padding:16px; border:1px solid var(--border); border-radius:14px; }
     .vnum{ font-size:.7em; vertical-align:super; margin-right:6px; color:var(--muted); }
+
     nav.nav{ display:flex; gap:8px; margin-top:14px; justify-content:center; flex-wrap:wrap; }
     a.btn{ border:1px solid var(--border); border-radius:10px; padding:8px 12px; text-decoration:none; color:inherit; }
-    .share{ display:flex; gap:8px; margin-top:14px; justify-content:center; flex-wrap:wrap; }
+
+    .share{ display:flex; gap:8px; margin-top:12px; justify-content:center; flex-wrap:wrap; }
     .chip{ background:var(--chip); border:1px solid var(--border); border-radius:999px; padding:8px 12px; font-size:14px; text-decoration:none; color:inherit; display:inline-flex; align-items:center; gap:6px; }
+    .copied{ font-size:12px; color:var(--muted); margin-top:4px; text-align:center; }
+
     footer{ margin:40px 0 16px; text-align:center; color:var(--muted); font-size:14px; }
     footer a{ color:inherit; }
-    .copied{ font-size:12px; color:var(--muted); margin-top:4px; text-align:center; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <div class="brand">
-        <img src="${LOGO_URL}" alt="${BRAND}">
-        <a class="pill" href="https://www.the-holy-bible.online" rel="noopener">The Holy Bible</a>
-      </div>
-      <div class="title">
-        <h1>${TITLE}</h1>
-        <div class="sub">${ref}</div>
-      </div>
+      <img src="${LOGO_URL}" alt="${BRAND}">
+      <div>${BRAND}</div>
+      <h1>${TITLE}</h1>
+      <div class="sub">${ref}</div>
     </header>
 
     <div class="searchbar">
@@ -251,9 +237,16 @@ function templatePage({ book, chapter, verse, text }) {
         ${BOOKS.map(b => `<option value="${b}">`).join("")}
       </datalist>
       <button id="refGo" type="button">Go</button>
+      <a class="btnlink" href="https://www.livingwordbibles.com/read-the-bible-online/asv" rel="noopener">The Holy Bible</a>
     </div>
 
     <div class="verse"><span class="vnum">${verse}</span>${verseEsc}</div>
+
+    <!-- Prev/Next ABOVE share bar -->
+    <nav class="nav">
+      <a class="btn" href="${urlFor(book, chapter, Math.max(1, verse - 1))}">⟨ Prev</a>
+      <a class="btn" href="${urlFor(book, chapter, verse + 1)}">Next ⟩</a>
+    </nav>
 
     <div class="share">
       <a class="chip" id="shareFB" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(canonical)}" target="_blank" rel="noopener">${svg("fb")}<span>Facebook</span></a>
@@ -264,11 +257,6 @@ function templatePage({ book, chapter, verse, text }) {
       <button class="chip" id="copyBtn" type="button">${svg("copy")}<span>Copy</span></button>
     </div>
     <div id="copyState" class="copied" hidden>Copied!</div>
-
-    <nav class="nav">
-      <a class="btn" href="${urlFor(book, chapter, Math.max(1, verse - 1))}">⟨ Prev</a>
-      <a class="btn" href="${urlFor(book, chapter, verse + 1)}">Next ⟩</a>
-    </nav>
 
     <footer>
       Copyright © 2025 | Living Word Bibles | <a href="https://www.livingwordbibles.com" rel="noopener">www.livingwordbibles.com</a>
@@ -281,27 +269,20 @@ function templatePage({ book, chapter, verse, text }) {
     const BASE_PATH = ${JSON.stringify(BASE_PATH)};
     const slugifyBook = (b) => b.replace(/\\s+/g, "-");
     function norm(s){ return s.toLowerCase().replace(/\\./g,"").replace(/\\s+/g," ").trim(); }
+    const alias = ${JSON.stringify({
+      "gen":"Genesis","ge":"Genesis","gn":"Genesis","ex":"Exodus","exod":"Exodus","lev":"Leviticus","leviticus":"Leviticus","num":"Numbers","nu":"Numbers","nm":"Numbers","deut":"Deuteronomy","dt":"Deuteronomy","jos":"Joshua","josh":"Joshua","jdg":"Judges","judg":"Judges","ru":"Ruth","rut":"Ruth","1sa":"1 Samuel","1 sam":"1 Samuel","1sam":"1 Samuel","2sa":"2 Samuel","2 sam":"2 Samuel","2sam":"2 Samuel","1ki":"1 Kings","1 kgs":"1 Kings","1kgs":"1 Kings","2ki":"2 Kings","2 kgs":"2 Kings","2kgs":"2 Kings","1ch":"1 Chronicles","1 chr":"1 Chronicles","1chr":"1 Chronicles","2ch":"2 Chronicles","2 chr":"2 Chronicles","2chr":"2 Chronicles","ezr":"Ezra","neh":"Nehemiah","est":"Esther","job":"Job","ps":"Psalms","psa":"Psalms","psalm":"Psalms","psalms":"Psalms","prov":"Proverbs","prv":"Proverbs","pro":"Proverbs","eccl":"Ecclesiastes","ecc":"Ecclesiastes","qohelet":"Ecclesiastes","song":"Song of Solomon","song of songs":"Song of Solomon","canticles":"Song of Solomon","ss":"Song of Solomon","isa":"Isaiah","jer":"Jeremiah","lam":"Lamentations","eze":"Ezekiel","ezek":"Ezekiel","dan":"Daniel","hos":"Hosea","joe":"Joel","amo":"Amos","oba":"Obadiah","jon":"Jonah","mic":"Micah","nah":"Nahum","hab":"Habakkuk","zep":"Zephaniah","hag":"Haggai","zec":"Zechariah","zech":"Zechariah","mal":"Malachi","mat":"Matthew","matt":"Matthew","mk":"Mark","mrk":"Mark","lk":"Luke","luk":"Luke","jn":"John","jhn":"John","act":"Acts","rom":"Romans","1co":"1 Corinthians","1 cor":"1 Corinthians","1cor":"1 Corinthians","2co":"2 Corinthians","2 cor":"2 Corinthians","2cor":"2 Corinthians","gal":"Galatians","eph":"Ephesians","php":"Philippians","phil":"Philippians","col":"Colossians","1th":"1 Thessalonians","1 thes":"1 Thessalonians","1thess":"1 Thessalonians","2th":"2 Thessalonians","2 thes":"2 Thessalonians","2thess":"2 Thessalonians","1ti":"1 Timothy","1 tim":"1 Timothy","1tim":"1 Timothy","2ti":"2 Timothy","2 tim":"2 Timothy","2tim":"2 Timothy","tit":"Titus","phm":"Philemon","philem":"Philemon","heb":"Hebrews","jas":"James","jam":"James","james":"James","1pe":"1 Peter","1 pet":"1 Peter","1pet":"1 Peter","2pe":"2 Peter","2 pet":"2 Peter","2pet":"2 Peter","1jn":"1 John","1 joh":"1 John","1john":"1 John","2jn":"2 John","2 joh":"2 John","2john":"2 John","3jn":"3 John","3 joh":"3 John","3john":"3 John","jud":"Jude","rev":"Revelation","re":"Revelation","apoc":"Revelation"
+    })};
     function normalizeBook(v){
-      const map = ${JSON.stringify(Object.fromEntries(
-        // reuse the mapping in JS (lowercased keys only)
-        Object.entries({
-          "gen":"Genesis","ge":"Genesis","gn":"Genesis","ex":"Exodus","exod":"Exodus","lev":"Leviticus","leviticus":"Leviticus","num":"Numbers","nu":"Numbers","nm":"Numbers","deut":"Deuteronomy","dt":"Deuteronomy","jos":"Joshua","josh":"Joshua","jdg":"Judges","judg":"Judges","ru":"Ruth","rut":"Ruth","1sa":"1 Samuel","1 sam":"1 Samuel","1sam":"1 Samuel","2sa":"2 Samuel","2 sam":"2 Samuel","2sam":"2 Samuel","1ki":"1 Kings","1kgs":"1 Kings","1 kgs":"1 Kings","2ki":"2 Kings","2kgs":"2 Kings","2 kgs":"2 Kings","1ch":"1 Chronicles","1 chr":"1 Chronicles","1chr":"1 Chronicles","2ch":"2 Chronicles","2 chr":"2 Chronicles","2chr":"2 Chronicles","ezr":"Ezra","neh":"Nehemiah","est":"Esther","job":"Job","ps":"Psalms","psa":"Psalms","psalm":"Psalms","psalms":"Psalms","prov":"Proverbs","prv":"Proverbs","pro":"Proverbs","eccl":"Ecclesiastes","ecc":"Ecclesiastes","qohelet":"Ecclesiastes","song":"Song of Solomon","song of songs":"Song of Solomon","canticles":"Song of Solomon","ss":"Song of Solomon","isa":"Isaiah","jer":"Jeremiah","lam":"Lamentations","eze":"Ezekiel","ezek":"Ezekiel","dan":"Daniel","hos":"Hosea","joe":"Joel","amo":"Amos","oba":"Obadiah","jon":"Jonah","mic":"Micah","nah":"Nahum","hab":"Habakkuk","zep":"Zephaniah","hag":"Haggai","zec":"Zechariah","zech":"Zechariah","mal":"Malachi","mat":"Matthew","matt":"Matthew","mk":"Mark","mrk":"Mark","lk":"Luke","luk":"Luke","jn":"John","jhn":"John","act":"Acts","rom":"Romans","1co":"1 Corinthians","1 cor":"1 Corinthians","1cor":"1 Corinthians","2co":"2 Corinthians","2 cor":"2 Corinthians","2cor":"2 Corinthians","gal":"Galatians","eph":"Ephesians","php":"Philippians","phil":"Philippians","col":"Colossians","1th":"1 Thessalonians","1 thes":"1 Thessalonians","1thess":"1 Thessalonians","2th":"2 Thessalonians","2 thes":"2 Thessalonians","2thess":"2 Thessalonians","1ti":"1 Timothy","1 tim":"1 Timothy","1tim":"1 Timothy","2ti":"2 Timothy","2 tim":"2 Timothy","2tim":"2 Timothy","tit":"Titus","phm":"Philemon","philem":"Philemon","heb":"Hebrews","jas":"James","jam":"James","james":"James","1pe":"1 Peter","1 pet":"1 Peter","1pet":"1 Peter","2pe":"2 Peter","2 pet":"2 Peter","2pet":"2 Peter","1jn":"1 John","1 joh":"1 John","1john":"1 John","2jn":"2 John","2 joh":"2 John","2john":"2 John","3jn":"3 John","3 joh":"3 John","3john":"3 John","jud":"Jude","rev":"Revelation","re":"Revelation","apoc":"Revelation"
-        }).map(([k,v]) => [k.toLowerCase(), v])
-      ))};
       const s = norm(v);
-      if (map[s]) return map[s];
-      // Try exact book name
+      if (alias[s]) return alias[s];
       const exact = BOOKS.find(b => norm(b) === s);
       if (exact) return exact;
-      // Try prefix
       const pref = BOOKS.find(b => norm(b).startsWith(s));
       return pref || v;
     }
-
     function parseRef(s){
       const t = norm(s);
       if (!t) return null;
-      // Split "Book chap:verse" or "Book chap"
       const m = t.match(/^(.*?)[\\s]+(\\d+)(?::(\\d+))?$/);
       if (!m) return null;
       const book = normalizeBook(m[1]);
@@ -310,41 +291,27 @@ function templatePage({ book, chapter, verse, text }) {
       if (!BOOKS.includes(book) || !chapter || chapter<1 || verse<1) return null;
       return { book, chapter, verse };
     }
-
-    document.getElementById('refGo').addEventListener('click', () => {
+    const go = ()=> {
       const raw = document.getElementById('refInput').value;
       const ref = parseRef(raw);
       if (!ref) { alert('Enter a reference like "John 3:16".'); return; }
       const href = BASE_PATH + '/' + slugifyBook(ref.book) + '/' + ref.chapter + '/' + ref.verse + '/';
       window.location.href = href;
-    });
-    document.getElementById('refInput').addEventListener('keydown',(e)=>{
-      if (e.key === 'Enter') document.getElementById('refGo').click();
-    });
+    };
+    document.getElementById('refGo').addEventListener('click', go);
+    document.getElementById('refInput').addEventListener('keydown',(e)=>{ if (e.key === 'Enter') go(); });
 
     // Copy button
     const copyBtn = document.getElementById('copyBtn');
     const copied = document.getElementById('copyState');
-    copyBtn.addEventListener('click', async () => {
+    copyBtn?.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(${JSON.stringify(canonical)});
-        copied.hidden = false;
-        setTimeout(()=> copied.hidden = true, 1600);
-      } catch(e) {
-        copied.textContent = 'Copy failed';
-        copied.hidden = false;
-        setTimeout(()=> copied.hidden = true, 1600);
-      }
+        copied.hidden = false; setTimeout(()=> copied.hidden = true, 1600);
+      } catch { copied.textContent = 'Copy failed'; copied.hidden = false; setTimeout(()=> copied.hidden = true, 1600); }
     });
 
-    // Optional: use Web Share API on mobile
-    const shareX = document.getElementById('shareX');
-    if (navigator.share) {
-      shareX.addEventListener('click', (ev) => {
-        ev.preventDefault();
-        navigator.share({ title: ${JSON.stringify(TITLE)}, text: ${JSON.stringify(ref)}, url: ${JSON.stringify(canonical)} }).catch(()=>{});
-      }, { once:true });
-    }
+    // Optional: Web Share API on mobile for X - we keep link behavior by default
   })();
 </script>
 
