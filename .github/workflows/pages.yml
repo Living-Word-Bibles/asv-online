@@ -18,17 +18,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      # Not strictly needed, but avoids 'npm not found' warnings in some org policies
-      - name: Prepare workspace
-        run: npm i --no-audit --no-fund || true
-
       - name: Build static site
         run: node build.mjs
+
+      # Debug: see what we built (leave in for now; remove later if you want)
+      - name: Inspect dist
+        run: |
+          echo "--- dist file count ---"
+          find dist -type f | wc -l
+          echo "--- root ---"
+          ls -lah dist | sed -n '1,200p'
+          echo "--- sample verse dir ---"
+          ls -lah dist/asv/Genesis/1/ | sed -n '1,200p' || true
+          echo "--- head of index.html ---"
+          sed -n '1,50p' dist/index.html || true
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
