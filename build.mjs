@@ -1,5 +1,5 @@
 // ASV Static Verse Site Generator — Living Word Bibles
-// Output: ./dist/asv/<Book>/<Chapter>/<Verse>/index.html + sitemap.xml + robots.txt + 404.html + healthz.txt
+// Output: ./dist/asv/<Book>/<Chapter>/<Verse>/index.html + sitemap.xml + robots.txt + ads.txt + 404.html + healthz.txt
 
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -12,6 +12,8 @@ const BRAND = "Living Word Bibles";
 const TITLE = "The Holy Bible: American Standard Version";
 const LOGO_URL = "https://static1.squarespace.com/static/68d6b7d6d21f02432fd7397b/t/690209b3567af44aabfbdaca/1761741235124/LivingWordBibles01.png";
 const IG_URL = "https://www.instagram.com/living.word.bibles/";
+
+const ADSENSE_PUB = "ca-pub-5303063222439969"; // <<< your AdSense publisher id
 
 // Prefer local JSON; if absent, fall back to mirrors
 const LOCAL_JSON = path.join(__dirname, "ASV", "ASV_bible.json");
@@ -48,24 +50,19 @@ function normalizeBook(v) {
   if (typeof v === "number") return BOOKS[Math.max(1, Math.min(66, v)) - 1];
   const s = String(v).trim();
   const map = {
-    "gen":"Genesis","ge":"Genesis","gn":"Genesis",
-    "ex":"Exodus","exod":"Exodus","lev":"Leviticus","leviticus":"Leviticus",
+    "gen":"Genesis","ge":"Genesis","gn":"Genesis","ex":"Exodus","exod":"Exodus","lev":"Leviticus","leviticus":"Leviticus",
     "num":"Numbers","nu":"Numbers","nm":"Numbers","deut":"Deuteronomy","dt":"Deuteronomy",
     "jos":"Joshua","josh":"Joshua","jdg":"Judges","judg":"Judges","ru":"Ruth","rut":"Ruth",
     "1sa":"1 Samuel","1 sam":"1 Samuel","1sam":"1 Samuel","2sa":"2 Samuel","2 sam":"2 Samuel","2sam":"2 Samuel",
     "1ki":"1 Kings","1 kgs":"1 Kings","1kgs":"1 Kings","2ki":"2 Kings","2 kgs":"2 Kings","2kgs":"2 Kings",
     "1ch":"1 Chronicles","1 chr":"1 Chronicles","1chr":"1 Chronicles","2ch":"2 Chronicles","2 chr":"2 Chronicles","2chr":"2 Chronicles",
     "ezr":"Ezra","neh":"Nehemiah","est":"Esther","job":"Job",
-    "ps":"Psalms","psa":"Psalms","psalm":"Psalms","psalms":"Psalms",
-    "prov":"Proverbs","prv":"Proverbs","pro":"Proverbs",
-    "eccl":"Ecclesiastes","ecc":"Ecclesiastes","qohelet":"Ecclesiastes",
-    "song":"Song of Solomon","song of songs":"Song of Solomon","canticles":"Song of Solomon","ss":"Song of Solomon",
-    "isa":"Isaiah","jer":"Jeremiah","lam":"Lamentations","eze":"Ezekiel","ezek":"Ezekiel","dan":"Daniel","hos":"Hosea","joe":"Joel",
-    "amo":"Amos","oba":"Obadiah","jon":"Jonah","mic":"Micah","nah":"Nahum","hab":"Habakkuk","zep":"Zephaniah","hag":"Haggai",
-    "zec":"Zechariah","zech":"Zechariah","mal":"Malachi","mat":"Matthew","matt":"Matthew","mk":"Mark","mrk":"Mark","lk":"Luke","luk":"Luke",
-    "jn":"John","jhn":"John","act":"Acts","rom":"Romans",
-    "1co":"1 Corinthians","1 cor":"1 Corinthians","1cor":"1 Corinthians",
-    "2co":"2 Corinthians","2 cor":"2 Corinthians","2cor":"2 Corinthians",
+    "ps":"Psalms","psa":"Psalms","psalm":"Psalms","psalms":"Psalms","prov":"Proverbs","prv":"Proverbs","pro":"Proverbs",
+    "eccl":"Ecclesiastes","ecc":"Ecclesiastes","qohelet":"Ecclesiastes","song":"Song of Solomon","song of songs":"Song of Solomon","canticles":"Song of Solomon","ss":"Song of Solomon",
+    "isa":"Isaiah","jer":"Jeremiah","lam":"Lamentations","eze":"Ezekiel","ezek":"Ezekiel","dan":"Daniel","hos":"Hosea","joe":"Joel","amo":"Amos","oba":"Obadiah","jon":"Jonah",
+    "mic":"Micah","nah":"Nahum","hab":"Habakkuk","zep":"Zephaniah","hag":"Haggai","zec":"Zechariah","zech":"Zechariah","mal":"Malachi",
+    "mat":"Matthew","matt":"Matthew","mk":"Mark","mrk":"Mark","lk":"Luke","luk":"Luke","jn":"John","jhn":"John","act":"Acts","rom":"Romans",
+    "1co":"1 Corinthians","1 cor":"1 Corinthians","1cor":"1 Corinthians","2co":"2 Corinthians","2 cor":"2 Corinthians","2cor":"2 Corinthians",
     "gal":"Galatians","eph":"Ephesians","php":"Philippians","phil":"Philippians","col":"Colossians",
     "1th":"1 Thessalonians","1 thes":"1 Thessalonians","1thess":"1 Thessalonians",
     "2th":"2 Thessalonians","2 thes":"2 Thessalonians","2thess":"2 Thessalonians",
@@ -161,7 +158,7 @@ async function fetchJsonAny(urls) {
   throw lastErr || new Error("All ASV sources failed");
 }
 
-// ---------- Page template ----------
+// ---------- SVG icons ----------
 function svg(icon){
   const base = {
     fb:  '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.8V12h2.6V9.8c0-2.6 1.6-4 3.9-4 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>',
@@ -174,6 +171,7 @@ function svg(icon){
   return base[icon] || "";
 }
 
+// ---------- Page template ----------
 function templatePage({ book, chapter, verse, text }) {
   const ref = `${book} ${chapter}:${verse}`;
   const canonical = `${SITE_ORIGIN}${urlFor(book, chapter, verse)}`;
@@ -190,6 +188,11 @@ function templatePage({ book, chapter, verse, text }) {
   <meta property="og:title" content="${title}"><meta property="og:description" content="${verseEsc}">
   <meta property="og:type" content="article"><meta property="og:url" content="${canonical}">
   <meta property="og:site_name" content="${BRAND}"><meta name="twitter:card" content="summary_large_image">
+
+  <!-- AdSense (Auto ads) -->
+  <meta name="google-adsense-account" content="${ADSENSE_PUB}">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUB}" crossorigin="anonymous"></script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap');
     :root{ --border:#e6e6e6; --ink:#111; --muted:#737373; --chip:#f5f5f5; }
@@ -247,6 +250,16 @@ function templatePage({ book, chapter, verse, text }) {
       <a class="btn" href="${urlFor(book, chapter, Math.max(1, verse - 1))}">⟨ Prev</a>
       <a class="btn" href="${urlFor(book, chapter, verse + 1)}">Next ⟩</a>
     </nav>
+
+    <!-- OPTIONAL manual ad unit (uncomment & set your ad slot ID in data-ad-slot)
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center; margin:12px auto 0"
+         data-ad-client="${ADSENSE_PUB}"
+         data-ad-slot="REPLACE_WITH_YOUR_SLOT"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    -->
 
     <div class="share">
       <a class="chip" id="shareFB" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(canonical)}" target="_blank" rel="noopener">${svg("fb")}<span>Facebook</span></a>
@@ -310,8 +323,6 @@ function templatePage({ book, chapter, verse, text }) {
         copied.hidden = false; setTimeout(()=> copied.hidden = true, 1600);
       } catch { copied.textContent = 'Copy failed'; copied.hidden = false; setTimeout(()=> copied.hidden = true, 1600); }
     });
-
-    // Optional: Web Share API on mobile for X - we keep link behavior by default
   })();
 </script>
 
@@ -384,6 +395,11 @@ ${urls.map(u => `  <url><loc>${u}</loc></url>`).join("\n")}
 `User-agent: *
 Allow: /
 Sitemap: ${SITE_ORIGIN}/sitemap.xml
+`);
+
+  console.log("ads.txt…");
+  await writeFileSafe(path.join(outDir, "ads.txt"),
+`google.com, pub-5303063222439969, DIRECT, f08c47fec0942fa0
 `);
 
   console.log("Root splash → Genesis 1:1");
